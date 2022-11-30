@@ -8,7 +8,99 @@ datasource db {
 }
 
 model admin {
-  id        Int      @id @default(autoincrement())
-  email     String   
+  id Int @id @default(autoincrement())
+  email String   
   password  String
+}
+
+model educationForm {
+  id Int @id @default(autoincrement())
+  educationForm String
+  students student[]
+}
+
+model qualification {
+  id Int @id @default(autoincrement())
+  qualification String
+  students student[]
+}
+
+model level {
+  id Int @id @default(autoincrement())
+  level String
+  students student[]
+}
+
+model examSession {
+  id Int @id @default(autoincrement())
+  examSession String
+  grades grade[]
+}
+
+model discipline {
+  id Int @id @default(autoincrement())
+  discipline String
+  grades grade[]
+  lecturers lecturerDiscipline[]
+}
+
+model lecturer {
+  id Int @id @default(autoincrement())
+  firstName String
+  lastName String
+  adress String
+  phone String
+  email String   
+  password String
+  degree String
+  grades grade[]
+  disciplines lecturerDiscipline[]
+}
+
+model lecturerDiscipline {
+  lecturerId Int
+  lecturer lecturer @relation(fields: [lecturerId], references: [id])
+  disciplineId Int
+  discipline discipline @relation(fields: [disciplineId], references: [id])
+
+  @@id([lecturerId, disciplineId])
+}
+
+model student {
+  id Int @id @default(autoincrement())
+  firstName String
+  secondName String
+  lastName String
+  egn String
+  facultyNumber String 
+  email String   
+  password String
+  dateOfBirth DateTime
+  adress String
+  citizenship String
+  startDate DateTime
+  phone String
+  educationFormId Int
+  educationForm educationForm @relation(fields: [educationFormId], references: [id])
+  levelId Int
+  level level @relation(fields: [levelId], references: [id])
+  qualificationId Int
+  qualification qualification @relation(fields: [qualificationId], references: [id])
+  grades grade[]
+}
+
+model grade {
+  id Int @id @default(autoincrement())
+  course Int
+  semester String
+  year Int 
+  grade Int
+  disciplineId Int
+  discipline discipline @relation(fields: [disciplineId], references: [id])
+  lecturerId Int
+  lecturer lecturer @relation(fields: [lecturerId], references: [id])
+  examSessionId Int
+  examSession examSession @relation(fields: [examSessionId], references: [id])
+  studentId Int
+  student student @relation(fields: [studentId], references: [id])
 }
