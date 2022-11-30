@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "migrations": "npx prisma migrate dev",
+    "seeds": "npx prisma db seed"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
