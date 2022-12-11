@@ -33,6 +33,20 @@ app.get('/edu', async (req, res) => {
 	res.send();
 });
 
+app.post("/discipline/create", async (req, res) => {
+	try {
+		const discipline = await prisma.discipline.create({
+		data: {
+			discipline: req.body.name,
+		},
+		});
+		res.status(200).send(discipline);
+	} catch (err) {
+		console.log(err);
+		res.status(500).send("Something went wrong");
+	}
+});
+
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`);
 });
