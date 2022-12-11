@@ -88,6 +88,20 @@ app.put('/discipline/update/:id', async (req, res) => {
 	}
 });
 
+app.delete("/discipline/delete/:id", async (req, res) => {
+  try {
+    await prisma.discipline.delete({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
+    res.status(200).send();
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Something went wrong");
+  }
+});
+
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`);
 });
