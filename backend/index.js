@@ -33,7 +33,7 @@ app.get('/edu', async (req, res) => {
 	res.send();
 });
 
-app.post("/discipline/create", async (req, res) => {
+app.post('/discipline/create', async (req, res) => {
 	try {
 		const discipline = await prisma.discipline.create({
 		data: {
@@ -46,6 +46,23 @@ app.post("/discipline/create", async (req, res) => {
 		res.status(500).send("Something went wrong");
 	}
 });
+
+app.put('/discipline/update/:id', async (req, res) => {
+	try {
+		await prisma.discipline.update({
+			where: {
+				id: Number(req.params.id)
+			},
+			data: {
+				discipline: req.body.name
+			}
+		})
+		res.status(200).send();
+	} catch (err) {
+		console.log(err);
+		res.status(500).send("Something went wrong");
+	}
+})
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`);
