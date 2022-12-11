@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 app.get('/', async (req, res) => {
     const allAdmins = await prisma.admin.findMany()
     res.send(allAdmins);
-})
+});
 
 app.get('/test', async (req, res) => {
     await prisma.admin.create({
@@ -18,7 +18,7 @@ app.get('/test', async (req, res) => {
       },
     });
     res.send();
-})
+});
 
 app.get("/edu", async (req, res) => {
   await prisma.educationForm.create({
@@ -31,5 +31,5 @@ app.get("/edu", async (req, res) => {
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
-})
+});
 
