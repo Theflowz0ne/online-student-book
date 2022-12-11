@@ -62,14 +62,6 @@ CREATE TABLE "lecturer" (
 );
 
 -- CreateTable
-CREATE TABLE "lecturerDiscipline" (
-    "lecturerId" INTEGER NOT NULL,
-    "disciplineId" INTEGER NOT NULL,
-
-    CONSTRAINT "lecturerDiscipline_pkey" PRIMARY KEY ("lecturerId","disciplineId")
-);
-
--- CreateTable
 CREATE TABLE "student" (
     "id" SERIAL NOT NULL,
     "firstName" TEXT NOT NULL,
@@ -106,11 +98,17 @@ CREATE TABLE "grade" (
     CONSTRAINT "grade_pkey" PRIMARY KEY ("id")
 );
 
--- AddForeignKey
-ALTER TABLE "lecturerDiscipline" ADD CONSTRAINT "lecturerDiscipline_lecturerId_fkey" FOREIGN KEY ("lecturerId") REFERENCES "lecturer"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateTable
+CREATE TABLE "_disciplineTolecturer" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
 
--- AddForeignKey
-ALTER TABLE "lecturerDiscipline" ADD CONSTRAINT "lecturerDiscipline_disciplineId_fkey" FOREIGN KEY ("disciplineId") REFERENCES "discipline"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "_disciplineTolecturer_AB_unique" ON "_disciplineTolecturer"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_disciplineTolecturer_B_index" ON "_disciplineTolecturer"("B");
 
 -- AddForeignKey
 ALTER TABLE "student" ADD CONSTRAINT "student_educationFormId_fkey" FOREIGN KEY ("educationFormId") REFERENCES "educationForm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -132,3 +130,9 @@ ALTER TABLE "grade" ADD CONSTRAINT "grade_examSessionId_fkey" FOREIGN KEY ("exam
 
 -- AddForeignKey
 ALTER TABLE "grade" ADD CONSTRAINT "grade_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_disciplineTolecturer" ADD CONSTRAINT "_disciplineTolecturer_A_fkey" FOREIGN KEY ("A") REFERENCES "discipline"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_disciplineTolecturer" ADD CONSTRAINT "_disciplineTolecturer_B_fkey" FOREIGN KEY ("B") REFERENCES "lecturer"("id") ON DELETE CASCADE ON UPDATE CASCADE;

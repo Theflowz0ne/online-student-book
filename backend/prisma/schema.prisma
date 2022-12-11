@@ -41,7 +41,7 @@ model discipline {
   id Int @id @default(autoincrement())
   discipline String
   grades grade[]
-  lecturers lecturerDiscipline[]
+  lecturers lecturer[]
 }
 
 model lecturer {
@@ -54,16 +54,7 @@ model lecturer {
   password String
   degree String
   grades grade[]
-  disciplines lecturerDiscipline[]
-}
-
-model lecturerDiscipline {
-  lecturerId Int
-  lecturer lecturer @relation(fields: [lecturerId], references: [id])
-  disciplineId Int
-  discipline discipline @relation(fields: [disciplineId], references: [id])
-
-  @@id([lecturerId, disciplineId])
+  disciplines discipline[]
 }
 
 model student {
