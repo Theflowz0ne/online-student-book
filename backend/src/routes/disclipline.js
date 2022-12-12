@@ -44,7 +44,7 @@ router.post("/discipline/create", async (req, res) => {
 
 router.put("/discipline/update/:id", async (req, res) => {
   try {
-    await prisma.discipline.update({
+    const discipline = await prisma.discipline.update({
       where: {
         id: Number(req.params.id),
       },
@@ -52,7 +52,7 @@ router.put("/discipline/update/:id", async (req, res) => {
         discipline: req.body.name,
       },
     });
-    res.status(200).send();
+    res.status(200).send(discipline);
   } catch (err) {
     console.log(err);
     res.status(500).send("Something went wrong");
