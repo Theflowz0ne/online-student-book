@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import disciplineRoutes from './src/routes/disclipline.js';
+import lecturerRoutes from './src/routes/lecturer.js'
 import gradeRoutes from "./src/routes/grade.js";
 import studentRoutes from "./src/routes/student.js";
 
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use(disciplineRoutes);
+app.use(lecturerRoutes);
 app.use(gradeRoutes);
 app.use(studentRoutes);
 
