@@ -1,12 +1,16 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
+import { hashpass } from "../utils/utils.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();
 
 router.get("/lecturer/get", async (req, res) =>{
     try {
-        const lecturer = await prisma.lecturer.findMany();
+        const lecturers = await prisma.lecturer.findMany();
+        lecturers.forEach((lecturer) => {
+            delete lecturer.password;
+        })
         res.status(200).send(lecturer);
     } catch (err) {
         console.log(err);
@@ -21,6 +25,7 @@ router.get("/lecturer/get/:id", async (req, res) => {
             id: Number(req.params.id),
             }
         });
+        delete lecturer.password;
         res.status(200).send(lecturer);
     } catch (err) {
         console.log(err);
@@ -37,7 +42,7 @@ router.post("/lecturer/create", async (req, res)=>{
                 adress: req.body.adress,
                 degree: req.body.degree,
                 email: req.body.email,
-                password: req.body.password,
+                password: hashpass(req.body.password),
                 phone: req.body.phone
             }
         });
